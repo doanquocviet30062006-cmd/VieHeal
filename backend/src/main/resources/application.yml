@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: clinic-platform-backend
+
+  profiles:
+    default: dev
+
+server:
+  port: 8080
+  shutdown: graceful
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+
+  endpoint:
+    health:
+      show-details: never
+
+logging:
+  level:
+    root: INFO
+    com.clinic.platform: INFO

@@ -1,0 +1,30 @@
+# Gradle
+.gradle/
+**/.gradle/
+**/build/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Secrets / local env
+.env
+.env.*
+!.env.example
+
+# Logs / diagnostics
+*.log
+diagnostics/
+**/diagnostics/
+
+# Temporary bootstrap artifacts
+**/bootstrap-temp/
+**/bootstrap.zip
+
+# Backup files
+*.bak
+
+# OS
+Thumbs.db
+.DS_Store
