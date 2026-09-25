@@ -49,4 +49,13 @@ object PermissionCodes {
 
     const val SERVICE_UPDATE =
         "service.update"
+
+    const val SCHEDULE_READ =
+        "schedule.read"
+
+    const val SCHEDULE_CREATE =
+        "schedule.create"
+
+    const val SCHEDULE_UPDATE =
+        "schedule.update"
 }
