@@ -31,4 +31,13 @@ object PermissionCodes {
 
     const val PATIENT_UPDATE =
         "patient.update"
+
+    const val PRACTITIONER_READ =
+        "practitioner.read"
+
+    const val PRACTITIONER_CREATE =
+        "practitioner.create"
+
+    const val PRACTITIONER_UPDATE =
+        "practitioner.update"
 }
