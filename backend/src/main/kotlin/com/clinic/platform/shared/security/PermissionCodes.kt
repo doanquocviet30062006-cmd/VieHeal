@@ -40,4 +40,13 @@ object PermissionCodes {
 
     const val PRACTITIONER_UPDATE =
         "practitioner.update"
+
+    const val SERVICE_READ =
+        "service.read"
+
+    const val SERVICE_CREATE =
+        "service.create"
+
+    const val SERVICE_UPDATE =
+        "service.update"
 }
