@@ -76,4 +76,19 @@ object PermissionCodes {
 
     const val QUEUE_UPDATE =
         "queue.update"
+
+    const val ENCOUNTER_READ =
+        "encounter.read"
+
+    const val ENCOUNTER_CREATE =
+        "encounter.create"
+
+    const val ENCOUNTER_UPDATE =
+        "encounter.update"
+
+    const val CLINICAL_NOTE_READ =
+        "clinical_note.read"
+
+    const val CLINICAL_NOTE_UPDATE =
+        "clinical_note.update"
 }
