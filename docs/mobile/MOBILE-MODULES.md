@@ -1,22 +1,24 @@
 # Android module and package design
 
-Status: **[IMPLEMENTED FOUNDATION]** for `app`, `core:common`, `core:model`, `core:designsystem`, `core:ui`, `core:navigation`, `core:network`, `core:security`, `feature:auth`, and `feature:home`. Clinical feature, data, database, datastore, and test-fixture modules below remain **[TARGET / NOT IMPLEMENTED]**.
+Status: **[IMPLEMENTED THROUGH AUTH PHASE]** for `app`, `core:common`, `core:model`, `core:designsystem`, `core:ui`, `core:navigation`, `core:network`, `core:security`, `feature:auth`, and `feature:home`. Clinical feature, data, database, datastore, and test-fixture modules below remain **[TARGET / NOT IMPLEMENTED]**.
 
 ## Implemented foundation and target modules
 
 | Module | Owns | May depend on |
 |---|---|---|
-| `app` | Application, Activity, root navigation, DI assembly, build variant wiring | all feature navigation APIs; core modules; data bindings |
+| `app` | Activity, auth/session composition root, root navigation, lifecycle restoration, build configuration | feature modules and core implementations |
 | `core:common` | result/error primitives, coroutine dispatchers, clock/ID abstractions | Kotlin/Android primitives only |
-| `core:model` | shared domain identifiers and cross-feature read models | `core:common` |
-| `core:network` | Retrofit services, DTOs, serializer, OkHttp/interceptors/error parser | common; model only for mapping boundary if necessary |
+| `core:model` | shared domain identifiers, token metadata, authorized user/organization/facility context, application-session gateway contract | `core:common` |
+| `core:network` | `/auth/me` transport and DTO mapping; future feature services/serialization/error parser | common and model |
 | `core:database` | Room database, entities, DAOs, migrations, transactions | common |
 | `core:datastore` | non-secret preferences and active-scope preference | common, model |
-| `core:security` | OIDC session abstraction, Keystore-backed token boundary, secure cleanup | common, model; no feature dependency |
+| `core:security` | AppAuth OIDC discovery/code exchange/refresh/logout, Keystore token store, session state machine and token provider | model and network contracts; no feature dependency |
 | `core:designsystem` | tokens, theme and reusable visual components | Compose/Android only |
 | `core:ui` | shared state panels, formatting and permission/offline UI | common, model, designsystem |
 | `core:testing` | fakes/builders/dispatchers/test rules; test source only | core contracts; never production runtime |
-| each `feature:*` | navigation contract, screen, presentation state/events, feature use cases and repository interface | common, model, ui/designsystem; feature navigation APIs only |
+| `feature:auth` | sign-in/retry/cancel/sign-out actions and safe auth UI state/effects | security contracts and designsystem |
+| `feature:home` | minimal backend-authorized context presentation and logout action | model and designsystem |
+| future `feature:*` | navigation contract, screen, presentation state/events, feature use cases and repository interface | common, model, ui/designsystem; feature navigation APIs only |
 | `data` (initial shared implementation module) | repository implementations and DTO/entity/domain mappers | repository contracts, network, database, datastore, security |
 
 Feature modules: `auth`, `dashboard`, `patients`, `appointments`, `queue`, `encounter`, `clinicalnote`, `assistant`, `profile`. Future: `diagnosis`, `observation`, `prescription`, `lab`, `billing`.

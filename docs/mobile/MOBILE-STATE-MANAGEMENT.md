@@ -1,6 +1,8 @@
 # Mobile state, lifecycle and restoration contract
 
-Status: **[IMPLEMENTED FOUNDATION]** for immutable app startup state and `StateFlow` ownership in `AppViewModel`. Feature ViewModels, repository-backed state, `SavedStateHandle`, process restoration, Room, and clinical reducers remain **[TARGET / NOT IMPLEMENTED]**.
+Status: **[IMPLEMENTED PHASE 2]** for immutable startup/session state, lifecycle-aware `StateFlow`, auth UI effects, protected process-relaunch restoration, and session-driven graph selection. Clinical feature state, Room, and clinical reducers remain **[TARGET / NOT IMPLEMENTED]**.
+
+Authentication uses mutually exclusive `Initializing`, `Unauthenticated`, `Authorizing`, `ResolvingApplicationSession`, `Authenticated(context)`, `AccessDenied`, `ConfigurationError`, `NetworkUnavailable`, and `RecoverableFailure` states. Only `Authenticated(context)` maps to Home; every other navigable state remains inside the authentication graph.
 
 ## Data flow
 

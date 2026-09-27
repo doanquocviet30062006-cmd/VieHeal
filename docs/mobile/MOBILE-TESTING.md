@@ -1,6 +1,6 @@
 # Mobile testing
 
-**[IMPLEMENTED FOUNDATION]** JVM tests cover startup-state resolution, the unauthenticated boundary, and route mapping. A Compose instrumentation test verifies the auth shell renders and Home does not appear automatically. The instrumentation source is compiled as a build gate; execution still requires an authorized device/emulator. The broader feature matrix remains **[TARGET / NOT IMPLEMENTED]**.
+**[IMPLEMENTED THROUGH AUTH PHASE]** JVM tests cover startup route mapping plus stored-session restore, OIDC completion/cancellation/callback failure, refresh success/rejection, refresh single-flight concurrency, `/auth/me` 401/403/5xx/network semantics, logout cleanup, and token redaction. Backend Testcontainers integration tests cover anonymous, mapped organization/facility context, system roles/permissions, and unmapped identity behavior. A Compose instrumentation test verifies the auth shell renders and Home does not appear automatically; runtime execution still requires a device/emulator. The broader clinical feature matrix remains **[TARGET / NOT IMPLEMENTED]**.
 
 | Target | Tests |
 |---|---|

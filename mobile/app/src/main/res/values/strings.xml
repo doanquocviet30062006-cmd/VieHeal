@@ -2,5 +2,4 @@
 <resources>
     <string name="app_name">VieHeal</string>
     <string name="startup_loading">Preparing VieHeal</string>
-    <string name="configuration_error_title">Configuration error</string>
 </resources>

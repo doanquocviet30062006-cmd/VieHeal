@@ -1,6 +1,11 @@
 package com.clinic.platform.modules.iam.api
 
 import com.clinic.platform.infrastructure.security.CurrentAccessContextResolver
+import com.clinic.platform.modules.iam.api.dto.AuthMeFacilityResponse
+import com.clinic.platform.modules.iam.api.dto.AuthMeOrganizationResponse
+import com.clinic.platform.modules.iam.api.dto.AuthMeResponse
+import com.clinic.platform.modules.iam.api.dto.AuthMeUserResponse
+import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.web.bind.annotation.GetMapping
@@ -17,38 +22,34 @@ class AuthMeController(
     @GetMapping("/me")
     fun me(
         @AuthenticationPrincipal jwt: Jwt
-    ): Map<String, Any?> {
+    ): AuthMeResponse {
 
         val context =
             currentAccessContextResolver.resolve(jwt)
 
-        return linkedMapOf(
-            "sub" to jwt.subject,
-            "preferredUsername" to
-                jwt.getClaimAsString("preferred_username"),
-            "email" to
-                jwt.getClaimAsString("email"),
+        if (context.systemRoles.isEmpty() && context.organizations.isEmpty()) {
+            throw AccessDeniedException(
+                "Authenticated identity has no active application access"
+            )
+        }
 
-            "iamUserId" to context.user.id,
-            "displayName" to context.user.displayName,
-            "iamStatus" to context.user.status,
-
-            "organizations" to
-                context.organizations.map { access ->
-                    linkedMapOf(
-                        "membershipId" to
-                            access.membershipId,
-                        "organizationId" to
-                            access.organizationId,
-                        "roles" to access.roles,
-                        "permissions" to
-                            access.permissions,
-                        "facilityIds" to
-                            access.facilityIds
-                    )
-                },
-
-            "issuer" to jwt.issuer.toString()
+        return AuthMeResponse(
+            user = AuthMeUserResponse(
+                id = context.user.id,
+                externalSubject = requireNotNull(context.user.externalSubject),
+                displayName = context.user.displayName
+            ),
+            systemRoles = context.systemRoles,
+            systemPermissions = context.systemPermissions,
+            organizations = context.organizations.map { access ->
+                AuthMeOrganizationResponse(
+                    membershipId = access.membershipId,
+                    organizationId = access.organizationId,
+                    roles = access.roles,
+                    permissions = access.permissions,
+                    facilities = access.facilityIds.sorted().map(::AuthMeFacilityResponse)
+                )
+            }
         )
     }
 }

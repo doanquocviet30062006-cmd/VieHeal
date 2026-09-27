@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="home_title">VieHeal</string>
-    <string name="home_foundation_message">Authenticated workspace</string>
+    <string name="home_welcome">Welcome, %1$s</string>
+    <string name="home_context_summary">Authorized for %1$d organization(s) and %2$d facility assignment(s)</string>
+    <string name="home_sign_out">Sign out</string>
 </resources>

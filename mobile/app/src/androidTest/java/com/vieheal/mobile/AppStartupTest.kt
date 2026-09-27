@@ -13,6 +13,6 @@ class AppStartupTest {
     @Test
     fun unauthenticatedStartupShowsAuthAndDoesNotNavigateHome() {
         composeRule.onNodeWithText("Sign in required").assertIsDisplayed()
-        composeRule.onNodeWithText("Authenticated workspace").assertDoesNotExist()
+        composeRule.onNodeWithText("Sign out").assertDoesNotExist()
     }
 }

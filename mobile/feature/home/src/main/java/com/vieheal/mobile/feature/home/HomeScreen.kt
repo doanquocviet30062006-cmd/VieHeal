@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,9 +14,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.vieheal.mobile.core.designsystem.VieHealSpacing
+import com.vieheal.mobile.core.model.UserSessionContext
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(
+    context: UserSessionContext,
+    onSignOut: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Surface(modifier = modifier.fillMaxSize()) {
         Column(
             modifier =
@@ -31,10 +37,26 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 style = MaterialTheme.typography.headlineMedium,
             )
             Text(
-                text = stringResource(R.string.home_foundation_message),
+                text = stringResource(R.string.home_welcome, context.principal.displayName),
                 modifier = Modifier.padding(top = VieHealSpacing.Small),
                 style = MaterialTheme.typography.bodyLarge,
             )
+            Text(
+                text =
+                    stringResource(
+                        R.string.home_context_summary,
+                        context.organizations.size,
+                        context.organizations.sumOf { it.facilities.size },
+                    ),
+                modifier = Modifier.padding(top = VieHealSpacing.Small),
+                style = MaterialTheme.typography.bodyMedium,
+            )
+            Button(
+                onClick = onSignOut,
+                modifier = Modifier.padding(top = VieHealSpacing.Large),
+            ) {
+                Text(stringResource(R.string.home_sign_out))
+            }
         }
     }
 }

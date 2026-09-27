@@ -1,5 +1,6 @@
 package com.clinic.platform.modules.organization
 
+import org.hamcrest.Matchers.hasItem
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -68,9 +70,24 @@ class OrganizationApiIntegrationTest(
                 "42000000-0000-0000-0000-000000000001"
             )
 
+        private val UNRELATED_ORGANIZATION_ID =
+            UUID.fromString(
+                "42000000-0000-0000-0000-000000000002"
+            )
+
         private val ORGANIZATION_ADMIN_MEMBERSHIP_ID =
             UUID.fromString(
                 "43000000-0000-0000-0000-000000000001"
+            )
+
+        private val ORGANIZATION_ADMIN_FACILITY_ID =
+            UUID.fromString(
+                "44000000-0000-0000-0000-000000000001"
+            )
+
+        private val ORGANIZATION_ADMIN_ASSIGNMENT_ID =
+            UUID.fromString(
+                "45000000-0000-0000-0000-000000000001"
             )
 
         private const val ORGANIZATION_ADMIN_SUBJECT =
@@ -91,8 +108,64 @@ class OrganizationApiIntegrationTest(
         seedExistingOrganization()
         seedUsers()
         seedOrganizationAdminMembership()
+        seedOrganizationAdminFacility()
         seedOrganizationAdminRole()
         seedSystemAdminRole()
+    }
+
+    @Test
+    fun `auth me without JWT returns 401`() {
+        mockMvc.perform(get("/api/v1/auth/me"))
+            .andExpect(status().isUnauthorized)
+    }
+
+    @Test
+    fun `auth me returns mapped organization authorization context without leakage`() {
+        mockMvc.perform(
+            get("/api/v1/auth/me")
+                .with(jwtFor(ORGANIZATION_ADMIN_SUBJECT))
+        )
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.user.id").value(ORGANIZATION_ADMIN_USER_ID.toString()))
+            .andExpect(jsonPath("$.user.externalSubject").value(ORGANIZATION_ADMIN_SUBJECT))
+            .andExpect(jsonPath("$.user.displayName").value("Organization Admin"))
+            .andExpect(jsonPath("$.systemRoles").isEmpty)
+            .andExpect(jsonPath("$.systemPermissions").isEmpty)
+            .andExpect(jsonPath("$.organizations.length()").value(1))
+            .andExpect(jsonPath("$.organizations[0].organizationId").value(EXISTING_ORGANIZATION_ID.toString()))
+            .andExpect(jsonPath("$.organizations[0].roles[0]").value("ORGANIZATION_ADMIN"))
+            .andExpect(jsonPath("$.organizations[0].permissions").value(hasItem("organization.manage")))
+            .andExpect(jsonPath("$.organizations[0].facilities[0].facilityId").value(ORGANIZATION_ADMIN_FACILITY_ID.toString()))
+    }
+
+    @Test
+    fun `auth me returns system role and permissions`() {
+        mockMvc.perform(
+            get("/api/v1/auth/me")
+                .with(jwtFor(SYSTEM_ADMIN_SUBJECT))
+        )
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.systemRoles[0]").value("SYSTEM_ADMIN"))
+            .andExpect(jsonPath("$.systemPermissions[0]").value("organization.manage"))
+            .andExpect(jsonPath("$.organizations").isEmpty)
+    }
+
+    @Test
+    fun `auth me with unmapped subject returns 403`() {
+        mockMvc.perform(
+            get("/api/v1/auth/me")
+                .with(jwtFor("unmapped-application-user"))
+        )
+            .andExpect(status().isForbidden)
+    }
+
+    @Test
+    fun `auth me denies mapped user without active application context`() {
+        mockMvc.perform(
+            get("/api/v1/auth/me")
+                .with(jwtFor(NORMAL_USER_SUBJECT))
+        )
+            .andExpect(status().isForbidden)
     }
 
     @Test
@@ -308,6 +381,21 @@ class OrganizationApiIntegrationTest(
             "ORG-EXISTING",
             "Existing Test Organization"
         )
+
+        jdbcTemplate.update(
+            """
+            INSERT INTO organization.organizations (
+                id,
+                code,
+                name,
+                status
+            )
+            VALUES (?, ?, ?, 'ACTIVE')
+            """.trimIndent(),
+            UNRELATED_ORGANIZATION_ID,
+            "ORG-UNRELATED",
+            "Unrelated Test Organization"
+        )
     }
 
     private fun seedUsers() {
@@ -387,6 +475,38 @@ class OrganizationApiIntegrationTest(
             ORGANIZATION_ADMIN_MEMBERSHIP_ID,
             ORGANIZATION_ADMIN_USER_ID,
             EXISTING_ORGANIZATION_ID
+        )
+    }
+
+    private fun seedOrganizationAdminFacility() {
+        jdbcTemplate.update(
+            """
+            INSERT INTO organization.facilities (
+                id,
+                organization_id,
+                code,
+                name,
+                status
+            )
+            VALUES (?, ?, 'FAC-AUTH-ME', 'Auth Me Facility', 'ACTIVE')
+            """.trimIndent(),
+            ORGANIZATION_ADMIN_FACILITY_ID,
+            EXISTING_ORGANIZATION_ID
+        )
+
+        jdbcTemplate.update(
+            """
+            INSERT INTO iam.facility_assignments (
+                id,
+                membership_id,
+                facility_id,
+                status
+            )
+            VALUES (?, ?, ?, 'ACTIVE')
+            """.trimIndent(),
+            ORGANIZATION_ADMIN_ASSIGNMENT_ID,
+            ORGANIZATION_ADMIN_MEMBERSHIP_ID,
+            ORGANIZATION_ADMIN_FACILITY_ID
         )
     }
 

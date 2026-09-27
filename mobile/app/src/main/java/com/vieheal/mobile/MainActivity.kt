@@ -8,7 +8,7 @@ import com.vieheal.mobile.app.DefaultAppContainer
 import com.vieheal.mobile.app.VieHealApp
 
 class MainActivity : ComponentActivity() {
-    private val appContainer: DefaultAppContainer by lazy { DefaultAppContainer() }
+    private val appContainer: DefaultAppContainer by lazy { DefaultAppContainer(applicationContext) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

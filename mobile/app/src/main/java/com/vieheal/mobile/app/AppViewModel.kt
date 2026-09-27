@@ -2,31 +2,32 @@ package com.vieheal.mobile.app
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.vieheal.mobile.core.security.SessionStateProvider
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.vieheal.mobile.core.security.SessionController
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class AppViewModel(
-    private val sessionStateProvider: SessionStateProvider,
+    private val sessionController: SessionController,
 ) : ViewModel() {
-    private val _startupState = MutableStateFlow<AppStartupState>(AppStartupState.Initializing)
-    val startupState: StateFlow<AppStartupState> = _startupState.asStateFlow()
+    val startupState: StateFlow<AppStartupState> =
+        sessionController.state
+            .map(::resolveStartupState)
+            .stateIn(viewModelScope, SharingStarted.Eagerly, AppStartupState.Initializing)
 
     init {
-        refreshStartupState()
-    }
-
-    fun refreshStartupState() {
-        _startupState.value = resolveStartupState(sessionStateProvider.currentState())
+        viewModelScope.launch { sessionController.restore() }
     }
 
     companion object {
-        fun factory(sessionStateProvider: SessionStateProvider): ViewModelProvider.Factory =
+        fun factory(sessionController: SessionController): ViewModelProvider.Factory =
             viewModelFactory {
-                initializer { AppViewModel(sessionStateProvider) }
+                initializer { AppViewModel(sessionController) }
             }
     }
 }

@@ -56,6 +56,7 @@ services:
 
     command:
       - start-dev
+      - --import-realm
 
     environment:
       KC_DB: postgres
@@ -68,6 +69,9 @@ services:
 
     ports:
       - "8081:8080"
+
+    volumes:
+      - ./keycloak/clinic-platform-realm.json:/opt/keycloak/data/import/clinic-platform-realm.json:ro
 
     depends_on:
       keycloak-postgres:

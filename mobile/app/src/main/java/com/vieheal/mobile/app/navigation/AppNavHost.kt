@@ -13,7 +13,14 @@ import com.vieheal.mobile.feature.auth.AuthUiState
 import com.vieheal.mobile.feature.home.HomeScreen
 
 @Composable
-fun AppNavHost(startupState: AppStartupState) {
+fun AppNavHost(
+    startupState: AppStartupState,
+    authUiState: AuthUiState,
+    onSignIn: () -> Unit,
+    onRetry: () -> Unit,
+    onCancel: () -> Unit,
+    onSignOut: () -> Unit,
+) {
     val destination = checkNotNull(startupState.topLevelDestination())
 
     key(destination) {
@@ -23,17 +30,20 @@ fun AppNavHost(startupState: AppStartupState) {
                 TopLevelDestination.Auth -> {
                     composable(TopLevelDestination.Auth.route) {
                         AuthScreen(
-                            uiState =
-                                AuthUiState(
-                                    isAuthenticationConfigured = false,
-                                    isAuthenticated = false,
-                                ),
+                            uiState = authUiState,
+                            onSignIn = onSignIn,
+                            onRetry = onRetry,
+                            onCancel = onCancel,
+                            onSignOut = onSignOut,
                         )
                     }
                 }
 
                 TopLevelDestination.Home -> {
-                    composable(TopLevelDestination.Home.route) { HomeScreen() }
+                    val authenticated = startupState as AppStartupState.Authenticated
+                    composable(TopLevelDestination.Home.route) {
+                        HomeScreen(context = authenticated.context, onSignOut = onSignOut)
+                    }
                 }
             }
         }

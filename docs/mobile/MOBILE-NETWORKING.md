@@ -1,6 +1,8 @@
 # Mobile network contract
 
-Status: **[IMPLEMENTED FOUNDATION]** for transport-neutral access-token, timeout-policy, and typed failure contracts in `core:network`. No Retrofit/OkHttp client or API call exists yet; concrete transport, DTOs, serialization, interceptors, and repositories remain **[TARGET / NOT IMPLEMENTED]**.
+Status: **[IMPLEMENTED PHASE 2]** for the transport-neutral access-token contract, timeout policy, and concrete `/api/v1/auth/me` client. General feature API transport, serialization, interceptors, and repositories remain **[TARGET / NOT IMPLEMENTED]**.
+
+`HttpApplicationSessionGateway` is intentionally narrow: it sends the bearer credential only to the configured backend `/api/v1/auth/me`, maps the network DTO into stable session models, emits no request/body logs, and distinguishes 401, 403, 5xx, connectivity, and malformed responses.
 
 ## Client stack and interceptors
 
