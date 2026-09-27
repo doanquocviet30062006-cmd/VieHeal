@@ -4,7 +4,7 @@
 
 Prerequisites are Java 21, Docker and environment variables `CLINIC_DB_PASSWORD`, `KEYCLOAK_DB_PASSWORD`, and `KEYCLOAK_ADMIN_PASSWORD`; usernames have development defaults. Start dependencies with the development Compose file, configure a `clinic-platform` Keycloak realm and test users, then run `backend/gradlew.bat bootRun`. The backend defaults to the `dev` profile and port 8080; Keycloak development port is 8081; application PostgreSQL host port is 5433.
 
-Never commit `.env`, credentials, exported realms containing secrets, tokens or patient data. Use synthetic records for development. Keep `open-in-view=false` and `ddl-auto=validate`; schema changes use a new Flyway migration beginning at V25.
+Never commit `.env`, credentials, exported realms containing secrets, tokens or patient data. Use synthetic records for development. Keep `open-in-view=false` and `ddl-auto=validate`; schema changes use a new Flyway migration beginning at V26.
 
 ## Engineering workflow
 

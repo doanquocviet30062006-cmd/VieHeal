@@ -53,7 +53,7 @@ Secrets enter at runtime from a secret manager, never repository, image layer, B
 
 Liveness answers whether the process should restart. Readiness verifies required ability to serve without leaking details: DB connectivity/migration compatibility and critical configuration; Keycloak/AI availability may be degraded rather than make every clinical endpoint unavailable, according to policy. `/api/v1/health` currently reports static service UP and is not sufficient production readiness.
 
-Application rollback is safe only while schema is backward-compatible. Do not roll back an irreversible schema by editing V1–V24; deploy a forward repair or invoke an incident-approved restore. Android clients remain installed after server rollback, so APIs maintain compatibility and risky features use server flags. AI kill switch leaves manual notes available.
+Application rollback is safe only while schema is backward-compatible. Do not roll back an irreversible schema by editing V1–V25; deploy a forward repair or invoke an incident-approved restore. Android clients remain installed after server rollback, so APIs maintain compatibility and risky features use server flags. AI kill switch leaves manual notes available.
 
 ## Backup, DNS and certificates
 

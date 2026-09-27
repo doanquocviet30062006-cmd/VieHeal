@@ -10,7 +10,7 @@ Implementation state and documentation maturity are separate. Documents explicit
 
 ## Current implementation
 
-The verified backend is a Kotlin/Spring Boot modular monolith backed by PostgreSQL and Flyway migrations V1-V24, with JWT resource-server authentication integrated with Keycloak.
+The verified backend is a Kotlin/Spring Boot modular monolith backed by PostgreSQL and Flyway migrations V1-V25, with JWT resource-server authentication integrated with Keycloak.
 
 Implemented backend domains include:
 
@@ -104,9 +104,11 @@ See [System Architecture](docs/02-ARCHITECTURE.md).
 
 Architecture Decision Records are maintained under [`docs/adr/`](docs/adr/).
 
-## Important current security debt
+## Organization creation authorization
 
-`POST /api/v1/organizations` is currently documented as publicly accessible and is a **P0 security debt before production**. The implementation must be hardened and covered by integration tests before production deployment.
+`POST /api/v1/organizations` requires an authenticated IAM user with the system-scoped `organization.manage` permission. System roles are assigned through `iam.user_system_roles`; organization-scoped role grants do not satisfy this platform-level authorization boundary.
+
+Integration coverage verifies unauthenticated access returns 401, authenticated users without a system role return 403, an `ORGANIZATION_ADMIN` with organization-scoped `organization.manage` still returns 403, and an authorized `SYSTEM_ADMIN` returns 201.
 
 ## Clinical workflow boundary
 

@@ -2,7 +2,7 @@
 
 ## Status
 
-Current architecture decision record. **Accepted and [IMPLEMENTED]**; V1–V24 are immutable.
+Current architecture decision record. **Accepted and [IMPLEMENTED]**; V1–V25 are immutable.
 
 ## Context
 
@@ -14,7 +14,7 @@ Schema ownership must not drift between JPA, developer machines and deployed dat
 
 ## Decision
 
-PostgreSQL is authoritative. Flyway is the only schema evolution mechanism; Hibernate uses `ddl-auto: validate`. Released migrations are append-only; the next version is V25. Room is never a replacement for PostgreSQL.
+PostgreSQL is authoritative. Flyway is the only schema evolution mechanism; Hibernate uses `ddl-auto: validate`. Released migrations are append-only; the next version is V26. Room is never a replacement for PostgreSQL.
 
 ## Decision Drivers
 

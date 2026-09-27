@@ -1,6 +1,6 @@
 # Database architecture and migration registry
 
-Status: **[IMPLEMENTED]** PostgreSQL is the system of record. JPA maps persistence; Hibernate is configured with `ddl-auto: validate`; Flyway owns schema creation and evolution. V1–V24 are committed and immutable. The next schema change must be `V25__...sql`; never edit a released migration.
+Status: **[IMPLEMENTED]** PostgreSQL is the system of record. JPA maps persistence; Hibernate is configured with `ddl-auto: validate`; Flyway owns schema creation and evolution. V1–V25 are committed and immutable. The next schema change must be `V26__...sql`; never edit a released migration.
 
 ## Migration registry
 
@@ -30,6 +30,7 @@ Status: **[IMPLEMENTED]** PostgreSQL is the system of record. JPA maps persisten
 | V22 | `V22__create_encounter_schema.sql` | encounter namespace | encounter | none | none | none | yes |
 | V23 | `V23__add_encounter_permissions.sql` | encounter/note authorization | iam | permissions, role_permissions | encounter.read/create/update, clinical_note.read/update | exact clinical role mappings | yes |
 | V24 | `V24__create_encounter_tables.sql` | encounter and narrative note | encounter; reception altered | encounters, clinical_notes; queue supporting unique key | none | strong appointment/queue composite FKs; one encounter per appointment/queue; one note/encounter; lifecycle/content checks | yes |
+| V25 | `V25__add_system_role_assignments.sql` | system-level IAM role assignments | iam | user_system_roles; roles altered; role_permissions | SYSTEM_ADMIN gets `organization.manage` | unique `(roles.id,roles.scope)`; system-role composite FK; `role_scope='SYSTEM'` check; one system-role assignment per user/role | yes |
 
 ## Schema catalog
 
@@ -61,6 +62,7 @@ All tables use UUID primary keys except many-to-many tables whose composite fore
 | `iam.role_permissions` | composite PK `(role_id,permission_id)` | role and permission FKs | prevents duplicate grant |
 | `iam.organization_memberships` | PK id; unique user/org; supporting unique org/id | user and organization FKs | status check; user/org indexes |
 | `iam.membership_roles` | composite PK membership/role | membership and role FKs | prevents duplicate assignment |
+| `iam.user_system_roles` | composite PK `(user_id,role_id)` | user FK; composite `(role_id,role_scope)`→`iam.roles(id,scope)` | `role_scope='SYSTEM'`; role lookup index; assignment timestamp |
 | `iam.facility_assignments` | PK id; unique membership/facility | membership and facility FKs | status check; membership/facility indexes |
 | `patient.patients` | PK id; unique `(organization_id,patient_code)`; supporting org/id | org FK; composite `(org,managing_facility)`→facility; actor user FKs | nonblank code/name; sex/status/country checks; org/facility/status/phone indexes |
 | `practitioner.practitioners` | PK id; unique org/code and org/membership; supporting org/id | org FK; composite `(org,membership)`→membership; actor FKs | nonblank/type/status checks; org/member/type/license indexes |
@@ -128,11 +130,12 @@ erDiagram
 | terminal encounter note is immutable | **APPLICATION ENFORCED** | `UpdateClinicalNoteUseCase`; database has no immutable-row trigger |
 | one clinical note per encounter | **DATABASE ENFORCED** | V24 unique `(organization_id,encounter_id)` |
 | completing encounter completes queue/appointment | **NOT AN INVARIANT** | no cascade; separate use cases are required |
+| system-role assignment references only a SYSTEM-scoped role | **DATABASE ENFORCED** plus application filtering | V25 composite role/scope FK and `role_scope='SYSTEM'` check; `CurrentAccessContextResolver` filters `RoleScope.SYSTEM` |
 | caller permission and membership scope | **APPLICATION ENFORCED** | security/access service; database has no row-level security |
 
 ## Migration and operations policy
 
-Validate migrations in CI against empty and upgraded PostgreSQL. Use expand/migrate/contract for backward-compatible changes. Production deploy order is backup/readiness check, forward migration, compatible application rollout and verification; routine rollback is application rollback only while schema remains compatible. A corrective forward migration is preferred to editing or undoing V1–V24. RPO, RTO, backup retention, encryption and restore frequency are **[REQUIRES POLICY DECISION]**.
+Validate migrations in CI against empty and upgraded PostgreSQL. Use expand/migrate/contract for backward-compatible changes. Production deploy order is backup/readiness check, forward migration, compatible application rollout and verification; routine rollback is application rollback only while schema remains compatible. A corrective forward migration is preferred to editing or undoing V1–V25. RPO, RTO, backup retention, encryption and restore frequency are **[REQUIRES POLICY DECISION]**.
 
 ## Related documents
 

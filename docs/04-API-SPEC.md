@@ -45,7 +45,7 @@ Response families expose these important fields: organization/facility identity 
 | Operation | Method and exact path | Auth / permission / scope | Params / request | Response / success | Errors, preconditions and side effects |
 |---|---|---|---|---|---|
 | Application health | `GET /api/v1/health` | public | none | `HealthResponse(status,service,timestamp)`, 200 | no dependency readiness check; no mutation |
-| Create organization | `POST /api/v1/organizations` | **public; no permission** | `CreateOrganizationRequest` | `OrganizationResponse`, 201 | 400 validation; 409 duplicate code; creates organization. **P0 SECURITY DEBT BEFORE PRODUCTION** |
+| Create organization | `POST /api/v1/organizations` | JWT; system-scoped `organization.manage` | `CreateOrganizationRequest` | `OrganizationResponse`, 201 | 400 validation; 401 unauthenticated; 403 missing system permission; 409 duplicate code; creates organization |
 | Get organization | `GET /api/v1/organizations/{id}` | JWT; `organization.read`; membership in `id` | path `id` UUID | `OrganizationResponse`, 200 | 400 invalid UUID; 401/403; 404; read-only transaction |
 | Create facility | `POST /api/v1/organizations/{organizationId}/facilities` | JWT; `facility.manage`; organization scope | path organizationId; `CreateFacilityRequest` | `FacilityResponse`, 201 | 400/401/403/404 organization/409 duplicate code; creates facility |
 | List facilities | `GET /api/v1/organizations/{organizationId}/facilities` | JWT; `facility.read`; organization scope plus result filtered to assigned facility IDs | path organizationId | `FacilityResponse[]`, 200 | 400/401/403/404; read-only |

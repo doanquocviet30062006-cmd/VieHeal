@@ -15,6 +15,24 @@ class AccessAuthorizationService(
 ) {
 
     @Transactional(readOnly = true)
+    fun requireSystemPermission(
+        jwt: Jwt,
+        permission: String
+    ): AccessContext {
+
+        val context =
+            currentAccessContextResolver.resolve(jwt)
+
+        if (permission !in context.systemPermissions) {
+            throw AccessDeniedException(
+                "Missing system permission: $permission"
+            )
+        }
+
+        return context
+    }
+
+    @Transactional(readOnly = true)
     fun requireOrganizationPermission(
         jwt: Jwt,
         organizationId: UUID,

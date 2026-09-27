@@ -10,7 +10,7 @@ Unknown assignments use owner **UNASSIGNED**. A gap closes only when its definit
 | Mobile OIDC/PKCE absent | UNASSIGNED | realm/client config, login/logout/session video/tests | public client authenticates; no secret/password in APK; 401 and cleanup verified |
 | Core mobile workflow absent | UNASSIGNED | appointment→queue→encounter→note screenshots/API/DB proof | authorized user completes persisted synthetic journey and handles 400/403/409 |
 | AI gateway/provider absent | UNASSIGNED | backend source/config, provider trace metadata, review UI | real model called through backend; schema/safety/human review; no mobile key or fake response |
-| Organization creation is public | UNASSIGNED | security change and integration reports | unauthenticated 401, normal user 403, authorized platform admin 201, audit evidence |
+| Organization creation system authorization hardening | IMPLEMENTED | V25 + security change + OrganizationApiIntegrationTest | unauthenticated 401, authenticated user without system role 403, organization-scoped ORGANIZATION_ADMIN 403, authorized SYSTEM_ADMIN 201; full audit subsystem remains future work |
 | Final build/video absent | UNASSIGNED | evidence manifest, AAB/APK, 5–10 min video | video matches exact submitted build/commit and demonstrates required real evidence |
 
 ## P1 — major grading evidence

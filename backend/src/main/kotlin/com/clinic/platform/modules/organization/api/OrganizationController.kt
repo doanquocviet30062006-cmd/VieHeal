@@ -1,11 +1,11 @@
 package com.clinic.platform.modules.organization.api
 
 import com.clinic.platform.infrastructure.security.AccessAuthorizationService
-import com.clinic.platform.shared.security.PermissionCodes
 import com.clinic.platform.modules.organization.api.dto.CreateOrganizationRequest
 import com.clinic.platform.modules.organization.api.dto.OrganizationResponse
 import com.clinic.platform.modules.organization.application.CreateOrganizationUseCase
 import com.clinic.platform.modules.organization.application.GetOrganizationUseCase
+import com.clinic.platform.shared.security.PermissionCodes
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -34,8 +34,17 @@ class OrganizationController(
     fun create(
         @Valid
         @RequestBody
-        request: CreateOrganizationRequest
+        request: CreateOrganizationRequest,
+        @AuthenticationPrincipal
+        jwt: Jwt
     ): ResponseEntity<OrganizationResponse> {
+
+        accessAuthorizationService
+            .requireSystemPermission(
+                jwt = jwt,
+                permission =
+                    PermissionCodes.ORGANIZATION_MANAGE
+            )
 
         val organization =
             createOrganizationUseCase.execute(

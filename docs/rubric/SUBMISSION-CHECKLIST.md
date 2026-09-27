@@ -20,7 +20,7 @@
 
 ## Consistency/security
 
-- [ ] implemented/target labels audited; V1–V24 unchanged; next migration V25
+- [ ] implemented/target labels audited; V1–V25 unchanged; next migration V26
 - [ ] encounter invariant and non-cascading completion stated consistently
 - [ ] no unsupported legal compliance claims
 - [ ] links, Mermaid, spelling, figure/table numbering checked

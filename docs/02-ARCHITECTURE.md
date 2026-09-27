@@ -11,7 +11,7 @@ flowchart LR
   API --> UC[Application use cases]
   UC --> D[Domain models and ports]
   D --> JPA[JPA adapters]
-  JPA --> PG[(PostgreSQL V1-V24)]
+  JPA --> PG[(PostgreSQL V1-V25)]
   AZ --> IAM[IAM tables]
   KC[Keycloak dev container] -. issuer/JWT .-> API
 ```

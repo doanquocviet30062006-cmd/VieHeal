@@ -118,14 +118,12 @@ class SecurityConfiguration {
                     )
                     .authenticated()
 
-                    // TEMPORARY:
-                    // global organization creation vẫn mở
-                    // cho tới khi SYSTEM_ADMIN được model hoàn chỉnh.
+                    // GLOBAL ORGANIZATION CREATE
                     .requestMatchers(
                         HttpMethod.POST,
                         "/api/v1/organizations"
                     )
-                    .permitAll()
+                    .authenticated()
 
                     // Mọi endpoint còn lại phải authenticated
                     .anyRequest()

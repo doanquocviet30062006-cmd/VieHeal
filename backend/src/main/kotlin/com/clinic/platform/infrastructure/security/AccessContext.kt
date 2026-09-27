@@ -5,7 +5,9 @@ import java.util.UUID
 
 data class AccessContext(
     val user: IamUser,
-    val organizations: List<OrganizationAccess>
+    val organizations: List<OrganizationAccess>,
+    val systemRoles: Set<String> = emptySet(),
+    val systemPermissions: Set<String> = emptySet()
 )
 
 data class OrganizationAccess(

@@ -44,7 +44,7 @@ Remote refresh maps DTO→domain→entity and commits rows plus sync metadata at
 
 ## Room versioning and migration
 
-Room has its own integer schema version and `Migration(n,n+1)` chain; it is unrelated to Flyway V1–V24. Export Room schemas to version control, test each supported upgrade, test fresh install, and retain at least versions supported by app-upgrade policy. Destructive migration is allowed only for debug/test or after an explicit decision that all cached/draft data is disposable and the user is warned.
+Room has its own integer schema version and `Migration(n,n+1)` chain; it is unrelated to Flyway V1–V25. Export Room schemas to version control, test each supported upgrade, test fresh install, and retain at least versions supported by app-upgrade policy. Destructive migration is allowed only for debug/test or after an explicit decision that all cached/draft data is disposable and the user is warned.
 
 ## Synchronization rules
 

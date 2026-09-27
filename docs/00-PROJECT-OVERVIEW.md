@@ -10,7 +10,7 @@ The MVP boundary is a staff-facing Android app connected to a real VieHeal backe
 
 | Capability | Status | Repository evidence |
 |---|---|---|
-| Organization/facility and IAM | [IMPLEMENTED] | `modules/organization`, `modules/iam`, V1–V5 |
+| Organization/facility and IAM | [IMPLEMENTED] | `modules/organization`, `modules/iam`, V1–V5, V25 |
 | Patient and practitioner | [IMPLEMENTED] | corresponding modules, V6–V9 |
 | Service catalog and scheduling | [IMPLEMENTED] | corresponding modules, V10–V15 |
 | Appointment and reception queue | [IMPLEMENTED] | corresponding modules, V16–V21 |
