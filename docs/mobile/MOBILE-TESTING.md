@@ -1,6 +1,6 @@
 # Mobile testing
 
-No Android tests exist because no Android source exists. This is the required **[TARGET PRODUCTION DESIGN] [EVIDENCE GAP]** matrix.
+**[IMPLEMENTED FOUNDATION]** JVM tests cover startup-state resolution, the unauthenticated boundary, and route mapping. A Compose instrumentation test verifies the auth shell renders and Home does not appear automatically. The instrumentation source is compiled as a build gate; execution still requires an authorized device/emulator. The broader feature matrix remains **[TARGET / NOT IMPLEMENTED]**.
 
 | Target | Tests |
 |---|---|

@@ -1,6 +1,6 @@
 # Android build configuration and release
 
-Status: **[TARGET PRODUCTION DESIGN]**; no Android build/pipeline exists.
+Status: **[IMPLEMENTED FOUNDATION]** for reproducible local debug compile, unit test, lint, instrumentation-test compilation, and APK assembly. Staging/release variants, signing, R8 policy, CI, and deployment remain **[TARGET / NOT IMPLEMENTED]**.
 
 ## Build environments
 

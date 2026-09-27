@@ -1,6 +1,6 @@
 # Mobile product scope
 
-No Android project, manifest, Gradle module, Activity, Compose screen, ViewModel, API client, Room database, DataStore or Android test was found. Every item here is **[TARGET PRODUCTION DESIGN]** unless explicitly tied to the implemented backend.
+**[IMPLEMENTED FOUNDATION]** The Android project now provides the manifest/security baseline, modular Gradle graph, Compose Activity/root, design system, generic UI states, startup ViewModel, protected Auth/Home graph boundary, network/session contracts, JVM tests, and a Compose instrumentation test. Real OIDC, `/auth/me`, API clients, Room, DataStore, and every clinical workflow remain **[TARGET / NOT IMPLEMENTED]**.
 
 The first release is a staff application for Android. It must demonstrate real OIDC login, scope selection, appointment CRUD-style operations, queue workflow, encounter/note workflow, permission denial, network/error states and one real AI documentation-assistance flow. Patient self-service is deferred to avoid mixing trust models and navigation.
 

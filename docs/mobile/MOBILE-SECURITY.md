@@ -1,6 +1,6 @@
 # Android security model
 
-Status: **[TARGET PRODUCTION DESIGN]**.
+Status: **[IMPLEMENTED FOUNDATION]** for `allowBackup=false`, cleartext denial in the main manifest, minimal exports, and credential-free session/token contracts. OIDC/PKCE, Keystore persistence, logout cleanup, artifact scanning, and clinical-data controls remain **[TARGET / NOT IMPLEMENTED]**.
 
 | Area | Target control | Decision / verification |
 |---|---|---|

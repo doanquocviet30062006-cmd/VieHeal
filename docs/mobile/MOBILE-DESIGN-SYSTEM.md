@@ -1,6 +1,6 @@
 # Mobile design system
 
-**[TARGET PRODUCTION DESIGN]** Use Material 3 as the behavioral baseline with VieHeal tokens, not ad-hoc values.
+**[IMPLEMENTED FOUNDATION]** Material 3 light/dark color schemes, typography, shapes, spacing, and `VieHealTheme` exist as initial application tokens. They are not claimed as Figma- or research-validated. The broader component catalog below remains **[TARGET / NOT IMPLEMENTED]**.
 
 | Token group | Initial specification |
 |---|---|

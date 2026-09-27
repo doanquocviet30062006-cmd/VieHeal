@@ -1,5 +1,7 @@
 # Mobile navigation
 
+Status: **[IMPLEMENTED FOUNDATION]** for centralized Auth/Home destinations and a startup-state graph boundary. The unauthenticated graph contains no Home route, and the authenticated graph is created only from authenticated session state. OIDC, scope selection, deep links, and the clinical graph remain **[TARGET / NOT IMPLEMENTED]**.
+
 ## Target graph
 
 ```mermaid

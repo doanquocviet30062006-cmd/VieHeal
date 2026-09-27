@@ -15,7 +15,7 @@ The MVP boundary is a staff-facing Android app connected to a real VieHeal backe
 | Service catalog and scheduling | [IMPLEMENTED] | corresponding modules, V10–V15 |
 | Appointment and reception queue | [IMPLEMENTED] | corresponding modules, V16–V21 |
 | Encounter and clinical note | [IMPLEMENTED] | `modules/encounter`, V22–V24 |
-| Android client | [PLANNED] | no Android Gradle module or manifest found |
+| Android client | [PARTIAL FOUNDATION] | `mobile/` modular Compose project, startup/auth boundary, tests and debug APK; OIDC/API/clinical flows not implemented |
 | AI gateway/provider | [PLANNED] | `ai-platform/` is empty |
 | Diagnosis through billing | [PLANNED] | no source or tables found |
 | Consent/audit behavior | [PLANNED] | schemas exist, but no tables or services |

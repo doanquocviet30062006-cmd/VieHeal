@@ -1,6 +1,6 @@
 # Mobile state, lifecycle and restoration contract
 
-Status: **[TARGET PRODUCTION DESIGN]**.
+Status: **[IMPLEMENTED FOUNDATION]** for immutable app startup state and `StateFlow` ownership in `AppViewModel`. Feature ViewModels, repository-backed state, `SavedStateHandle`, process restoration, Room, and clinical reducers remain **[TARGET / NOT IMPLEMENTED]**.
 
 ## Data flow
 

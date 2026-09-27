@@ -6,7 +6,7 @@ Unknown assignments use owner **UNASSIGNED**. A gap closes only when its definit
 
 | Gap | Owner | Evidence needed | Definition of done |
 |---|---|---|---|
-| Android project absent | UNASSIGNED | source tree, signed demo build, architecture tests | release-capable app runs critical journey against real API with no production fake dependency |
+| Android clinical client incomplete | UNASSIGNED | foundation source exists; signed demo build and critical-journey tests remain | release-capable app runs critical journey against real API with no production fake dependency |
 | Mobile OIDC/PKCE absent | UNASSIGNED | realm/client config, login/logout/session video/tests | public client authenticates; no secret/password in APK; 401 and cleanup verified |
 | Core mobile workflow absent | UNASSIGNED | appointment→queue→encounter→note screenshots/API/DB proof | authorized user completes persisted synthetic journey and handles 400/403/409 |
 | AI gateway/provider absent | UNASSIGNED | backend source/config, provider trace metadata, review UI | real model called through backend; schema/safety/human review; no mobile key or fake response |

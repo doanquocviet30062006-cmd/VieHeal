@@ -2,7 +2,7 @@
 
 ## Status
 
-Current architecture decision record. **Proposed [TARGET PRODUCTION DESIGN]**; no Android source exists.
+Accepted and **[IMPLEMENTED FOUNDATION]** for the modular Compose shell, startup state, constructor-owned dependencies, and Auth/Home boundary. Repository/data/Room and clinical feature portions remain **[TARGET / NOT IMPLEMENTED]**.
 
 ## Context
 

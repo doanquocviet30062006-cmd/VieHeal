@@ -1,8 +1,8 @@
 # Android module and package design
 
-Status: **[TARGET PRODUCTION DESIGN]**. No Android source exists.
+Status: **[IMPLEMENTED FOUNDATION]** for `app`, `core:common`, `core:model`, `core:designsystem`, `core:ui`, `core:navigation`, `core:network`, `core:security`, `feature:auth`, and `feature:home`. Clinical feature, data, database, datastore, and test-fixture modules below remain **[TARGET / NOT IMPLEMENTED]**.
 
-## Exact target modules
+## Implemented foundation and target modules
 
 | Module | Owns | May depend on |
 |---|---|---|

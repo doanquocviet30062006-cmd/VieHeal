@@ -16,7 +16,7 @@ flowchart LR
   KC[Keycloak dev container] -. issuer/JWT .-> API
 ```
 
-There is no Android build, AI runtime, web UI, message broker, reverse proxy, CI workflow, or production deployment in the inspected tree.
+**[IMPLEMENTED FOUNDATION]** `mobile/` is a Gradle 9.6/AGP 9.4 Android project with a Compose single-activity app, ten modules, Material 3 design tokens, an immutable startup state holder, and authentication-gated top-level navigation. It intentionally has no OIDC exchange, API integration, clinical data, Room storage, or AI runtime yet. There is still no web UI, message broker, reverse proxy, CI workflow, or production deployment in the inspected tree.
 
 ## Target production architecture
 

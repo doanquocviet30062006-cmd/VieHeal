@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_title">Sign in required</string>
+    <string name="auth_not_configured">Secure sign-in is not configured in this foundation build.</string>
+    <string name="auth_future_scope">OIDC Authorization Code with PKCE will be connected in the next authentication phase.</string>
+</resources>

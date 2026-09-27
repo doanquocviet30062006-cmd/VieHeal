@@ -1,6 +1,6 @@
 # Mobile architecture
 
-**[TARGET PRODUCTION DESIGN] [EVIDENCE GAP]** Kotlin, Jetpack Compose, single Activity, Navigation Compose, ViewModel, immutable `StateFlow`, coroutines, dependency injection, repository ports, Retrofit/OkHttp, Room, DataStore and WorkManager. Verify current stable library versions when implementation starts; no version is claimed here.
+**[IMPLEMENTED FOUNDATION]** Kotlin with AGP built-in Kotlin, Jetpack Compose, a single Activity, Navigation Compose, a top-level ViewModel with immutable `StateFlow`, and explicit constructor-owned dependencies are present under `mobile/`. Repository implementations, Retrofit/OkHttp, Room, DataStore, WorkManager, OIDC, and clinical feature flows remain **[TARGET / NOT IMPLEMENTED]**.
 
 ```mermaid
 flowchart TD

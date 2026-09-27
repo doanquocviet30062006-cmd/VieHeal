@@ -21,6 +21,12 @@ diagnostics/
 # Temporary bootstrap artifacts
 **/bootstrap-temp/
 **/bootstrap.zip
+mobile/.p1b-backup/
+
+# Android outputs and machine-local configuration
+mobile/local.properties
+*.apk
+*.aab
 
 # Backup files
 *.bak

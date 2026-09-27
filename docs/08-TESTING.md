@@ -12,7 +12,7 @@ Room/repository	TTL, invalidation, scope cleanup, conflicts	migration and integr
 Navigation/UI	protected routes, role visibility, accessibility	Compose tests
 Contract/E2E	Keycloak + API + Android critical journey	staging gate
 AI evaluation	safety, schema, grounding, failure	15-scenario suite
-No final evidence may cite unexecuted tests as passing. Store command, commit, environment, timestamp and report artifact. Backend command: backend/gradlew.bat test. Android commands will be defined when its Gradle project exists. AI scenarios are specified in ai/AI-EVALUATION.md with NOT EXECUTED results.
+No final evidence may cite unexecuted tests as passing. Store command, commit, environment, timestamp and report artifact. Backend command: backend/gradlew.bat test. Android foundation gates are `mobile/gradlew.bat testDebugUnitTest`, `lintDebug`, `:app:assembleDebug`, and `:app:compileDebugAndroidTestKotlin`; run `connectedDebugAndroidTest` only with an authorized device/emulator. AI scenarios are specified in ai/AI-EVALUATION.md with NOT EXECUTED results.
 
 Critical journeys
 Authenticate; select organization/facility; load appointments; create/reschedule; check in; call/start service; start encounter; draft/edit note; complete encounter; separately complete queue and appointment; handle 400/401/403/404/409/5xx/offline. Verify no cross-tenant disclosure and no sensitive data in logs or failure reports.

@@ -15,4 +15,16 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "VieHealMobile"
-include(":app")
+
+include(
+    ":app",
+    ":core:common",
+    ":core:model",
+    ":core:designsystem",
+    ":core:ui",
+    ":core:navigation",
+    ":core:network",
+    ":core:security",
+    ":feature:auth",
+    ":feature:home",
+)

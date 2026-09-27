@@ -1,20 +1,20 @@
 package com.vieheal.mobile
 
-import android.app.Activity
 import android.os.Bundle
-import android.view.Gravity
-import android.widget.TextView
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import com.vieheal.mobile.app.DefaultAppContainer
+import com.vieheal.mobile.app.VieHealApp
 
-class MainActivity : Activity() {
+class MainActivity : ComponentActivity() {
+    private val appContainer: DefaultAppContainer by lazy { DefaultAppContainer() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(
-            TextView(this).apply {
-                text = "VieHeal"
-                textSize = 28f
-                gravity = Gravity.CENTER
-                contentDescription = "VieHeal"
-            }
-        )
+        enableEdgeToEdge()
+        setContent {
+            VieHealApp(container = appContainer)
+        }
     }
 }

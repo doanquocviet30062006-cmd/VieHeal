@@ -1,6 +1,6 @@
 # Mobile network contract
 
-Status: **[TARGET PRODUCTION DESIGN]**. `core:network` owns Retrofit/OkHttp, DTOs, serialization and transport error parsing; feature modules see repository interfaces/domain errors only.
+Status: **[IMPLEMENTED FOUNDATION]** for transport-neutral access-token, timeout-policy, and typed failure contracts in `core:network`. No Retrofit/OkHttp client or API call exists yet; concrete transport, DTOs, serialization, interceptors, and repositories remain **[TARGET / NOT IMPLEMENTED]**.
 
 ## Client stack and interceptors
 
